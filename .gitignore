@@ -1,0 +1,19 @@
+# Security: Ignore keys and private data
+service_account.json
+*.json
+
+# Data: Ignore private Excel/CSV files
+*.xlsx
+*.xls
+*.csv
+!README.md
+
+# Python: Ignore cache and env
+__pycache__/
+*.pyc
+.venv/
+env/
+
+# System: Ignore temp files
+~$*
+.DS_Store

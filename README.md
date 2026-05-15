@@ -23,8 +23,13 @@ A powerful, interactive Gemini CLI agent designed to automate complex Excel and 
    pip install pandas openpyxl
    ```
 3. **Install as an Extension**:
+   Using HTTPS:
    ```bash
    gemini extensions install https://github.com/suraj8277/google-sheet-agent
+   ```
+   Using SSH (Recommended for authenticated users):
+   ```bash
+   gemini extensions install git@github.com:suraj8277/google-sheet-agent.git
    ```
 4. **Reload Gemini**:
    ```bash

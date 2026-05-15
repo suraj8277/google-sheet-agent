@@ -22,9 +22,9 @@ A powerful, interactive Gemini CLI agent designed to automate complex Excel and 
    ```bash
    pip install pandas openpyxl
    ```
-3. **Install the Skill**:
+3. **Install as an Extension**:
    ```bash
-   gemini skills install ./google-sheet-agent.skill --scope user
+   gemini extensions install https://github.com/suraj8277/google-sheet-agent
    ```
 4. **Reload Gemini**:
    ```bash

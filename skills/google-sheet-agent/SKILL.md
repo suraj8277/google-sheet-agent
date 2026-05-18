@@ -1,43 +1,46 @@
 ---
 name: google-sheet-agent
-description: An advanced agent for processing local Excel and CSV files. Capabilities include multi-sheet support, merging, filtering, sorting, deduplication, and data summaries.
+description: An advanced agent for processing local Excel and CSV files. Capabilities include multi-sheet support, merging, filtering, sorting, deduplication, data summaries, AI-powered smart queries, and automatic visualization.
 ---
-# Advanced Excel Agent
+# Advanced Excel Agent (v2.0 - Live Assistant Brain)
 
-This skill enables a wide range of data processing tasks on local Excel (.xlsx) and CSV files, including full support for multi-sheet workbooks.
+This skill enables a wide range of data processing and analysis tasks on local Excel (.xlsx) and CSV files, including full support for multi-sheet workbooks and proactive intelligent help.
 
-## Multi-Sheet Operations
-You can target specific sheets or process all sheets at once.
-- **Specific Sheet**: Use `--sheet "SheetName"` or `--sheet 1` (0-based index).
-- **All Sheets (Batch)**: Use `--sheet ALL`. This will apply your command (like `dedupe` or `filter`) to every tab in the file and save a multi-sheet output.
-
-## Interactive Mode (Main Menu)
+## 🌟 Interactive Mode (Main Menu)
 If the user is vague or asks to "run the agent", **ALWAYS** use `ask_user` to present these options:
 
 - **Header**: "Action"
 - **Question**: "What would you like to do with your spreadsheet(s)?"
 - **Options**:
     - **Sync/Merge**: Update a sheet with data from another.
+    - **Analyze (Smart)**: Ask a natural language question about the data.
+    - **Visualize**: Generate charts (Bar, Pie, Line).
     - **Batch Process**: Apply a clean/filter rule to ALL sheets.
-    - **Join (VLookup)**: Combine sheets on a common key.
-    - **Analyze**: Summarize or Aggregate data.
     - **Edit**: Rename/Delete columns.
 
-## Capabilities
+## 🧠 Advanced Capabilities
 
-### 1. Merge & Join (Across Sheets)
+### 1. Smart Query (Natural Language)
+Instead of specific commands, you can now answer complex questions.
+- **Workflow**: Translate the user's question into a Python pandas snippet and run it.
+- **Command**: `python ./scripts/query_engine.py --input "file.xlsx" --code "result = df[df['Status'] == 'Active'].count()"`
+
+### 2. Visual Brain (Charts)
+Automatically generate images from data.
+- **Command**: `python ./scripts/visualizer.py --input "data.xlsx" --type "pie" --x "Region" --output "region_dist.png"`
+
+### 3. Multi-Sheet Operations
+- **Specific Sheet**: Use `--sheet "SheetName"`.
+- **All Sheets (Batch)**: Use `--sheet ALL`.
+
+### 4. Merge & Join
 - **Sync Sheets**: `python ./scripts/excel_processor.py merge --input "file1.xlsx" --sheet "OldData" --input2 "file2.xlsx" --sheet2 "NewData" --key "ID"`
-- **VLookup/Join**: `python ./scripts/excel_processor.py join --input "inventory.xlsx" --sheet "Items" --input2 "prices.xlsx" --sheet2 "PriceList" --key "SKU"`
 
-### 2. Batch Cleaning (All Sheets)
+### 5. Cleaning & Modification
 - **Dedupe All**: `python ./scripts/excel_processor.py dedupe --input "data.xlsx" --sheet ALL --column "ID"`
-- **Filter All**: `python ./scripts/excel_processor.py filter --input "logs.xlsx" --sheet ALL --column "Level" --value "Error"`
+- **Rename**: `python ./scripts/excel_processor.py rename --input "file.xlsx" --column "Old" --value "New"`
 
-### 3. Analysis & Modification
-- **Summary**: `python ./scripts/excel_processor.py summary --input "file.xlsx" --sheet ALL`
-- **Drop Column**: `python ./scripts/excel_processor.py drop --input "file.xlsx" --sheet "Sheet1" --column "PrivateData"`
-
-## Workflow Guidance
-1. **Identify Target**: Ask the user which sheet(s) they want to work on if it's not clear.
-2. **Execute**: Use `excel_processor.py` with the `--sheet` flag.
-3. **Verify**: If multiple sheets are saved, inform the user they are all preserved in the output file.
+## 🤖 Live Assistant Workflow
+1. **Proactive Check**: When a file is mentioned, offer a `summary` automatically.
+2. **Context Awareness**: If a Jira ticket is mentioned alongside a sheet (e.g., "Check status of servers in this sheet based on SYS-123"), use `Smart Query` to filter the sheet for relevant hostnames.
+3. **Verification**: Always confirm the output filename and location.
